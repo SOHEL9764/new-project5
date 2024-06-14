@@ -1,9 +1,8 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using AzureKeyVaultDemo.Data;
-using AzureKeyVaultDemo.Models;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +18,7 @@ builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential()
 var configuration = builder.Configuration;
 
 // Retrieve the connection string from Key Vault
-var connectionString = configuration["ConnectionStrings--DefaultConnection"];
+var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
 // Configure DbContext with the connection string from Key Vault
 builder.Services.AddDbContext<AppDbContext>(options =>
